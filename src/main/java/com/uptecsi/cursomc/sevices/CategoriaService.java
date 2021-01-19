@@ -2,12 +2,12 @@ package com.uptecsi.cursomc.sevices;
 
 import java.util.Optional;
 
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.uptecsi.cursomc.domain.Categoria;
 import com.uptecsi.cursomc.repositories.CategoriaRepository;
+import com.uptecsi.cursomc.sevices.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -17,6 +17,6 @@ public class CategoriaService {
 
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id +", Tipo: " + Categoria.class.getName()));
 	}
 }
